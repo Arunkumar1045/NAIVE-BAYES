@@ -1,0 +1,90 @@
+##import library
+import pandas as pd
+import numpy as np
+import statsmodels.formula.api as sm
+
+#load data 
+import os
+os.chdir('C:\\Users\\NEW\\Desktop\\python\\datasets')
+data = pd.read_csv('data1.csv')
+pd.set_option('display.max_columns', None)
+
+#missing values
+data.isnull().sum()#show is any variable has any missing value
+data.dropna() or fillna(0 or 1) to balance data
+
+#replace str to int
+data["category"] = data["category"].replace(["Yes","No"],[1,0])
+
+##same as logistic regression
+## NAVIE_BAYES ALGORITHM (for contineous dependent variable)
+
+#TRAIN&TEST DATA SPLIT
+from sklearn.model_selection import train_test_split
+x-train,x_test,y_train,y_test = train_test_split(inputs,target,test_size = 0.2)
+
+###Algorithm
+from sklearn.navie_bayes import GaussianNB
+model = GaussianNB()
+
+#DATA INTERPRETATION
+model.fit(x_train,y_train)
+
+model.score(x_test,y_test)
+
+model.predict or predict_prob(x_test[:10])
+
+####NAVIE_BAYES ALGORITHM(for discreate dependent variable)
+##import library
+import pandas as pd
+import numpy as np
+import statsmodels.formula.api as sm
+
+#load data 
+import os
+os.chdir('C:\\Users\\NEW\\Desktop\\python\\datasets')
+data = pd.read_csv('data1.csv')
+pd.set_option('display.max_columns', None)
+
+#missing values
+data.isnull().sum()#show is any variable has any missing value
+data.dropna() or fillna(0 or 1) to balance data
+
+#replace str to int
+data["category"] = data["category"].replace(["Yes","No"],[1,0])
+
+#TRAIN&TEST DATA SPLIT
+from sklearn.model_selection import train_test_split
+x-train,x_test,y_train,y_test = train_test_split(inputs,target,test_size = 0.2)
+
+###Algorithm
+from sklearn.feature_extraction.text import CountVectorizer
+v= CountVectorizer()
+x_train_count = v.fit_transform(x_train.vales)
+x_train_count.toarray()[:3]
+
+#HINT : CountVectorizer is used to convert the text(independent) into certain values for its understanding.
+
+#MODEL
+from sklearn.navie_bayes import MultinomialNB
+model = MultinomialNB()
+model.fit(x_train_count,y_train)
+
+#HINT: GaussianNB() - contineous variable
+       MultinomialNB() - discrete variable
+       BerbaulliNB() - binary(0,1)
+
+#example: email ham or spam classifier
+emails = ["email1","email2"]
+emails_count = v.transform(emalis)
+model.predict(emails_count)
+
+x_test_count = v.transform(x_test)
+model.score(x_test_count,y_test)
+
+#######using pipeline
+from sklearn.pipeline import pipeline
+data = pipeline([("vectorizer",CountVectorizer()),("nb",MultinomialNB())])
+data.fit(x_train,y_train)
+data.score(x_test,y_test)
+data.predict(emails)
